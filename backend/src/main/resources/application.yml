@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://db:5432/eventlab
+    username: learner
+    password: learning-only
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  kafka:
+    bootstrap-servers: kafka:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+      properties:
+        delivery.timeout.ms: 10000
+        request.timeout.ms: 5000
+        max.block.ms: 10000
+    consumer:
+      group-id: spring-report-results
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      ack-mode: record
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
